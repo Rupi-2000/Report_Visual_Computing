@@ -1,0 +1,357 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{ding2018learning}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=0ef29c0cdaa31e1b61d17e5d2445edf1}{%
+           family={Ding},
+           familyi={D\bibinitperiod},
+           given={Jian},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e165c6f1b6878abb158fb189d25899cf}{%
+           family={Xue},
+           familyi={X\bibinitperiod},
+           given={Nan},
+           giveni={N\bibinitperiod}}}%
+        {{hash=7df8bf07d6a812b861b5d00d04d5b005}{%
+           family={Long},
+           familyi={L\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=44ba9e336d73385ab4b9ce6084bf825c}{%
+           family={Xia},
+           familyi={X\bibinitperiod},
+           given={Gui-Song},
+           giveni={G\bibinithyphendelim S\bibinitperiod}}}%
+        {{hash=9ae6356ffb8f6b8efcb3bdefa1b3789b}{%
+           family={Lu},
+           familyi={L\bibinitperiod},
+           given={Qikai},
+           giveni={Q\bibinitperiod}}}%
+      }
+      \strng{namehash}{ec0dcefbdfa8a487aa44da5852707451}
+      \strng{fullhash}{80010a2b95b813ff677a05cdde8141a1}
+      \strng{fullhashraw}{80010a2b95b813ff677a05cdde8141a1}
+      \strng{bibnamehash}{ec0dcefbdfa8a487aa44da5852707451}
+      \strng{authorbibnamehash}{ec0dcefbdfa8a487aa44da5852707451}
+      \strng{authornamehash}{ec0dcefbdfa8a487aa44da5852707451}
+      \strng{authorfullhash}{80010a2b95b813ff677a05cdde8141a1}
+      \strng{authorfullhashraw}{80010a2b95b813ff677a05cdde8141a1}
+      \field{extraname}{1}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:1812.00155}
+      \field{title}{Learning RoI transformer for detecting oriented objects in aerial images}
+      \field{year}{2018}
+    \endentry
+    \entry{ding2021object}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=0ef29c0cdaa31e1b61d17e5d2445edf1}{%
+           family={Ding},
+           familyi={D\bibinitperiod},
+           given={Jian},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e165c6f1b6878abb158fb189d25899cf}{%
+           family={Xue},
+           familyi={X\bibinitperiod},
+           given={Nan},
+           giveni={N\bibinitperiod}}}%
+        {{hash=44ba9e336d73385ab4b9ce6084bf825c}{%
+           family={Xia},
+           familyi={X\bibinitperiod},
+           given={Gui-Song},
+           giveni={G\bibinithyphendelim S\bibinitperiod}}}%
+        {{hash=68f158f41c42b03be07aa7fb3c8d36de}{%
+           family={Bai},
+           familyi={B\bibinitperiod},
+           given={Xiang},
+           giveni={X\bibinitperiod}}}%
+        {{hash=9c245130418606dd988ed12a97044d62}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Wen},
+           giveni={W\bibinitperiod}}}%
+        {{hash=1d232dbe1559efb5ee9dbeb1245e5378}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Michael\bibnamedelima Ying},
+           giveni={M\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+        {{hash=044d1db5259b74e4975282f599d8e767}{%
+           family={Belongie},
+           familyi={B\bibinitperiod},
+           given={Serge},
+           giveni={S\bibinitperiod}}}%
+        {{hash=efa9b2a65485dcaee98452ac77378cac}{%
+           family={Luo},
+           familyi={L\bibinitperiod},
+           given={Jiebo},
+           giveni={J\bibinitperiod}}}%
+        {{hash=5ce04dd0b9604019878e13703f117bfc}{%
+           family={Datcu},
+           familyi={D\bibinitperiod},
+           given={Mihai},
+           giveni={M\bibinitperiod}}}%
+        {{hash=2371d3c1b93483ae5416c82c3544e5a3}{%
+           family={Pelillo},
+           familyi={P\bibinitperiod},
+           given={Marcello},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{ec0dcefbdfa8a487aa44da5852707451}
+      \strng{fullhash}{2dd138448aecb1d160bca0f8593e2558}
+      \strng{fullhashraw}{2dd138448aecb1d160bca0f8593e2558}
+      \strng{bibnamehash}{ec0dcefbdfa8a487aa44da5852707451}
+      \strng{authorbibnamehash}{ec0dcefbdfa8a487aa44da5852707451}
+      \strng{authornamehash}{ec0dcefbdfa8a487aa44da5852707451}
+      \strng{authorfullhash}{2dd138448aecb1d160bca0f8593e2558}
+      \strng{authorfullhashraw}{2dd138448aecb1d160bca0f8593e2558}
+      \field{extraname}{2}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE transactions on pattern analysis and machine intelligence}
+      \field{number}{11}
+      \field{title}{Object detection in aerial images: A large-scale benchmark and challenges}
+      \field{volume}{44}
+      \field{year}{2021}
+      \field{pages}{7778\bibrangedash 7796}
+      \range{pages}{19}
+    \endentry
+    \entry{lam2018xview}{article}{}{}
+      \name{author}{8}{}{%
+        {{hash=e4bccb074f7625853b6ed39ff001f6c5}{%
+           family={Lam},
+           familyi={L\bibinitperiod},
+           given={Darius},
+           giveni={D\bibinitperiod}}}%
+        {{hash=ae22257870b2bc2423cc854fdeb14056}{%
+           family={Kuzma},
+           familyi={K\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=0f001e2e12e317cb68d0f648776c7ca2}{%
+           family={McGee},
+           familyi={M\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+        {{hash=60f4fd2ffcca119719601f92bf75aa77}{%
+           family={Dooley},
+           familyi={D\bibinitperiod},
+           given={Samuel},
+           giveni={S\bibinitperiod}}}%
+        {{hash=86bf93bd0246bfc790407ea32e26613f}{%
+           family={Laielli},
+           familyi={L\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=5b1ccfc0acaa89d561a2fc766c4ee5f4}{%
+           family={Klaric},
+           familyi={K\bibinitperiod},
+           given={Matthew},
+           giveni={M\bibinitperiod}}}%
+        {{hash=4444186986fb8416980d77489204f4ee}{%
+           family={Bulatov},
+           familyi={B\bibinitperiod},
+           given={Yaroslav},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=7ed1b5ce79ba1286f7d8c6eac0fa3693}{%
+           family={McCord},
+           familyi={M\bibinitperiod},
+           given={Brendan},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{58ce8d3f6eeede33bcd6a34e42bd60ac}
+      \strng{fullhash}{095d41b5441d36b4487296b7e01bdf5d}
+      \strng{fullhashraw}{095d41b5441d36b4487296b7e01bdf5d}
+      \strng{bibnamehash}{58ce8d3f6eeede33bcd6a34e42bd60ac}
+      \strng{authorbibnamehash}{58ce8d3f6eeede33bcd6a34e42bd60ac}
+      \strng{authornamehash}{58ce8d3f6eeede33bcd6a34e42bd60ac}
+      \strng{authorfullhash}{095d41b5441d36b4487296b7e01bdf5d}
+      \strng{authorfullhashraw}{095d41b5441d36b4487296b7e01bdf5d}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:1802.07856}
+      \field{title}{xview: Objects in context in overhead imagery}
+      \field{year}{2018}
+    \endentry
+    \entry{li2020object}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=815a2cdb03036dc2884fcf0472f759cf}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Ke},
+           giveni={K\bibinitperiod}}}%
+        {{hash=e2c67c9619a1d5d097b0dc03db2d44f0}{%
+           family={Wan},
+           familyi={W\bibinitperiod},
+           given={Gang},
+           giveni={G\bibinitperiod}}}%
+        {{hash=8f8c67320b6baecc329cfb36911104e1}{%
+           family={Cheng},
+           familyi={C\bibinitperiod},
+           given={Gong},
+           giveni={G\bibinitperiod}}}%
+        {{hash=5d2a7def1e3fe5d6f7438f3016007828}{%
+           family={Meng},
+           familyi={M\bibinitperiod},
+           given={Liqiu},
+           giveni={L\bibinitperiod}}}%
+        {{hash=19b9723645f5a1e1abb104400e9352d6}{%
+           family={Han},
+           familyi={H\bibinitperiod},
+           given={Junwei},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{bc4908476129f5d39803e51d00d66921}
+      \strng{fullhash}{82ff1a7d3b5c79ee67cfe6db235d24db}
+      \strng{fullhashraw}{82ff1a7d3b5c79ee67cfe6db235d24db}
+      \strng{bibnamehash}{bc4908476129f5d39803e51d00d66921}
+      \strng{authorbibnamehash}{bc4908476129f5d39803e51d00d66921}
+      \strng{authornamehash}{bc4908476129f5d39803e51d00d66921}
+      \strng{authorfullhash}{82ff1a7d3b5c79ee67cfe6db235d24db}
+      \strng{authorfullhashraw}{82ff1a7d3b5c79ee67cfe6db235d24db}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ISPRS journal of photogrammetry and remote sensing}
+      \field{title}{Object detection in optical remote sensing images: A survey and a new benchmark}
+      \field{volume}{159}
+      \field{year}{2020}
+      \field{pages}{296\bibrangedash 307}
+      \range{pages}{12}
+    \endentry
+    \entry{lin2017feature}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{hash=08f925fe4692d130a1d7cb7d94483351}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Tsung-Yi},
+           giveni={T\bibinithyphendelim Y\bibinitperiod}}}%
+        {{hash=ecd149fdcb3e0503881d49e545744c3d}{%
+           family={Dollár},
+           familyi={D\bibinitperiod},
+           given={Piotr},
+           giveni={P\bibinitperiod}}}%
+        {{hash=bd5dadbe57bedc5957c19a3154c4d424}{%
+           family={Girshick},
+           familyi={G\bibinitperiod},
+           given={Ross},
+           giveni={R\bibinitperiod}}}%
+        {{hash=6b4b60e909e78633945f3f9c9dc83e01}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Kaiming},
+           giveni={K\bibinitperiod}}}%
+        {{hash=9cadf8ca1dd9b5f5a830ba2059b2517f}{%
+           family={Hariharan},
+           familyi={H\bibinitperiod},
+           given={Bharath},
+           giveni={B\bibinitperiod}}}%
+        {{hash=044d1db5259b74e4975282f599d8e767}{%
+           family={Belongie},
+           familyi={B\bibinitperiod},
+           given={Serge},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b7e00bc88d7aca4d4d5ddb8c252e36c}
+      \strng{fullhash}{407b643cc48d7ba78686be05e508bfa5}
+      \strng{fullhashraw}{407b643cc48d7ba78686be05e508bfa5}
+      \strng{bibnamehash}{3b7e00bc88d7aca4d4d5ddb8c252e36c}
+      \strng{authorbibnamehash}{3b7e00bc88d7aca4d4d5ddb8c252e36c}
+      \strng{authornamehash}{3b7e00bc88d7aca4d4d5ddb8c252e36c}
+      \strng{authorfullhash}{407b643cc48d7ba78686be05e508bfa5}
+      \strng{authorfullhashraw}{407b643cc48d7ba78686be05e508bfa5}
+      \field{extraname}{1}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the IEEE conference on computer vision and pattern recognition}
+      \field{title}{Feature pyramid networks for object detection}
+      \field{year}{2017}
+      \field{pages}{2117\bibrangedash 2125}
+      \range{pages}{9}
+    \endentry
+    \entry{lin2017focal}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=08f925fe4692d130a1d7cb7d94483351}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Tsung-Yi},
+           giveni={T\bibinithyphendelim Y\bibinitperiod}}}%
+        {{hash=d87be7c19fa16049347907c9820816c6}{%
+           family={Goyal},
+           familyi={G\bibinitperiod},
+           given={Priya},
+           giveni={P\bibinitperiod}}}%
+        {{hash=bd5dadbe57bedc5957c19a3154c4d424}{%
+           family={Girshick},
+           familyi={G\bibinitperiod},
+           given={Ross},
+           giveni={R\bibinitperiod}}}%
+        {{hash=6b4b60e909e78633945f3f9c9dc83e01}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Kaiming},
+           giveni={K\bibinitperiod}}}%
+        {{hash=ecd149fdcb3e0503881d49e545744c3d}{%
+           family={Dollár},
+           familyi={D\bibinitperiod},
+           given={Piotr},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b7e00bc88d7aca4d4d5ddb8c252e36c}
+      \strng{fullhash}{4ccabcfdf9c34f3d9a88fdca5bb95dd5}
+      \strng{fullhashraw}{4ccabcfdf9c34f3d9a88fdca5bb95dd5}
+      \strng{bibnamehash}{3b7e00bc88d7aca4d4d5ddb8c252e36c}
+      \strng{authorbibnamehash}{3b7e00bc88d7aca4d4d5ddb8c252e36c}
+      \strng{authornamehash}{3b7e00bc88d7aca4d4d5ddb8c252e36c}
+      \strng{authorfullhash}{4ccabcfdf9c34f3d9a88fdca5bb95dd5}
+      \strng{authorfullhashraw}{4ccabcfdf9c34f3d9a88fdca5bb95dd5}
+      \field{extraname}{2}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the IEEE international conference on computer vision}
+      \field{title}{Focal loss for dense object detection}
+      \field{year}{2017}
+      \field{pages}{2980\bibrangedash 2988}
+      \range{pages}{9}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

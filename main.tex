@@ -1,0 +1,145 @@
+%% A simple template for a lab or course report using the Hagenberg setup
+%% based on the standard LaTeX 'report' class
+
+%%% Magic comments for setting the correct parameters in compatible IDEs
+% !TeX encoding = utf8
+% !TeX program = pdflatex 
+% !TeX spellcheck = en_US
+% !BIB program = biber
+
+\RequirePackage[utf8]{inputenc} % Remove when using lualatex or xelatex!
+\RequirePackage{hgbpdfa}				% Remove if NO PDF/A output is desired
+
+\documentclass[language=english,titlepage=false,smartquotes=true]{hgbreport}
+% Supported options in [..]:
+%    Main language: language=english (default), language=german
+%    Typographic quotes: smartquotes=true, smartquotes=false (default)
+%    APA citation style: apa=true, apa=false (default)
+%    Title page: titlepage=true (default), titlepage=false
+%    Page layout: twoside=false (single-sided, default), twoside=true (double-sided)
+%    Update check: updatecheck=true (default), updatecheck=false (to suppress)
+%%%-----------------------------------------------------------------------------
+
+\renewcommand{\chapter}[1]{} % Disable \chapter command
+\graphicspath{{images/}}     % Location of images and graphics
+\bibliography{hgbreferences}    % Biblatex bibliography file (hgbreferences.bib)
+\ExecuteBibliographyOptions{backref=false} % No back references in bibliography
+
+%%%-----------------------------------------------------------------------------
+\setcounter{chapter}{1}	% <----- set to assignment number!
+\setcounter{secnumdepth}{4}  % Nummerierung bis Ebene 4
+
+%%%-----------------------------------------------------------------------------
+\begin{document}
+%%%-----------------------------------------------------------------------------
+
+\author{Niklas Etzlinger and Rupert Parzmair}                      % Your name
+\title{VCO2IL: Visual Computing (IM.ma VZ SS26)\\ % Name of the course
+				Lab Report \arabic{chapter}}
+\date{\today}
+
+%%%-----------------------------------------------------------------------------
+\maketitle
+%%%-----------------------------------------------------------------------------
+
+\begin{abstract}\noindent
+ToDO: Write a brief abstract (max. 150 words) summarizing the main goals, methods and results of this assignment.
+\end{abstract}
+
+%%%-----------------------------------------------------------------------------
+
+\section{Related Work: Object Detection in Aerial and Satellite Imagery}
+
+
+\subsection{Overview}
+
+Object detection in aerial and satellite imagery refers to the automatic localization and classification of objects of interest in overhead images of the Earth's surface. Typical target objects include vehicles, ships, airplanes, buildings, storage tanks, roads, and other man-made structures. This task is an important component of remote sensing image interpretation and supports a wide range of applications, such as urban planning, geographic information system updating, disaster response, precision agriculture, environmental monitoring, and security-related analysis \cite{li2020object,ding2021object}.
+
+Although object detection has been widely studied in natural images, aerial and satellite imagery introduces several domain-specific characteristics that make the task fundamentally different from ground-level detection. Natural images usually capture objects from a horizontal perspective and show their profile information, whereas remote sensing images are acquired from an overhead perspective and mainly capture roof or top-view information \cite{li2020object}. As a result, object appearance, scale, orientation, and surrounding context differ substantially from standard computer vision datasets. In addition, aerial images often contain objects with arbitrary orientations, large scale variations, dense object distributions, complex backgrounds, and very large image sizes \cite{ding2021object}.
+
+These properties make direct transfer of standard object detectors to aerial and satellite imagery difficult. For example, small vehicles may occupy only a few pixels, while airports or harbors can span large regions of an image. Objects such as ships, airplanes, and vehicles are often not aligned with the image axes, which motivates the use of oriented bounding boxes instead of conventional horizontal bounding boxes \cite{ding2021object}. Furthermore, large satellite or aerial images often need to be processed using tiling or sliding-window strategies because they cannot be passed through detection networks at full resolution.
+
+This chapter reviews the main challenges and methods for object detection in aerial and satellite imagery. First, it discusses important challenges such as scale variation, arbitrary object orientation, dense object distributions, large image sizes, and foreground-background imbalance. Second, it introduces oriented object detection and explains why horizontal bounding boxes are often insufficient for overhead imagery. Finally, relevant benchmark datasets and evaluation metrics are summarized, with particular attention to widely used datasets such as DOTA, DIOR, and xView.
+
+\subsection{Challenges in Aerial Imagery}
+
+A major challenge in aerial and satellite imagery is the strong variation in object scale. Small objects such as cars or small vehicles may occupy only a few pixels, while large structures such as airports, harbors, bridges, or industrial buildings can cover large image regions. This makes single-scale detection insufficient, because a feature representation that is suitable for large objects often lacks the spatial detail needed for small objects. Feature Pyramid Networks (FPN) address this problem by constructing multi-scale feature representations inside the network, allowing detections to be made at different feature levels \cite{ding2021object,lam2018xview,lin2017feature}.
+
+Another important difference compared to ground-level imagery is the arbitrary orientation of objects. In aerial images, objects such as ships, airplanes, vehicles, or storage tanks are observed from a top-down perspective and are therefore not necessarily aligned with the horizontal or vertical image axes. Conventional horizontal bounding boxes (HBBs) can include large amounts of background for rotated objects and may localize them only imprecisely. For this reason, oriented bounding boxes (OBBs) are often more appropriate in aerial object detection, since they can represent the actual object extent more accurately \cite{ding2021object,ding2018learning}.
+
+Dense object distributions further complicate detection. In scenes such as parking lots, harbors, airports, or urban traffic areas, many objects can appear close to each other or even overlap in the image. In such cases, horizontal boxes may cover multiple neighboring instances, which can lead to ambiguous feature extraction and localization errors. Moreover, post-processing methods such as non-maximum suppression become more difficult in high-density scenes, because correct detections of nearby objects may have high overlap and can be suppressed incorrectly \cite{ding2021object,ding2018learning}.
+
+Large image sizes are another practical issue in aerial and satellite imagery. Remote sensing images can be much larger than typical natural images, and in Earth observation settings image sizes may reach tens of thousands of pixels in width and height. Such images cannot usually be processed directly by standard convolutional object detectors because of memory and computation limits. Therefore, large images are commonly divided into smaller tiles or processed using sliding-window strategies. However, this introduces trade-offs: overlapping tiles reduce the risk of cutting objects at tile borders but increase computation time, while smaller tiles may lose important contextual information \cite{ding2021object}.
+
+Finally, aerial imagery often suffers from a strong foreground-background imbalance. Most pixels in an overhead image usually belong to background regions such as roads, fields, water, rooftops, or bare ground, while the target objects occupy only a small fraction of the image. This imbalance is especially problematic for dense one-stage detectors, where many easy background examples can dominate the training process. Focal Loss addresses this issue by down-weighting well-classified examples and focusing the training more strongly on hard examples, which makes it a suitable theoretical solution for foreground-background imbalance in dense object detection \cite{lin2017focal}.
+
+
+\subsection{Oriented Object Detection}
+
+\subsubsection{Limitations of Horizontal Bounding Boxes}
+% - Illustrate with example: rotated ship detected with huge HBB → lots of background included
+% - High overlap between HBBs → NMS removes correct detections
+% - Quantitative argument: IoU drops significantly for rotated objects with HBB
+
+\subsubsection{Oriented Bounding Box Parametrization}
+% - OBB defined as (x, y, w, h, θ)
+% - What θ represents: rotation angle, typical range [0°, 180°) or [-90°, 90°)
+% - Two conventions: OpenCV (long edge as width) vs. long-edge definition
+% - Why this parametrization is more precise for aerial objects
+
+\subsubsection{Angle Regression Challenges}
+% - Boundary discontinuity problem: 0° and 180° are the same orientation
+%   but have maximum numerical distance → loss spikes at boundaries
+% - Square-like objects: w/h ambiguity → 90° rotation looks identical
+% - Solutions:
+%   * Circular Smooth Label (CSL): converts angle to classification problem
+%   * KLD Loss: models box as Gaussian, uses KL-Divergence instead of L1
+%   * Gaussian representation: encodes box uncertainty, avoids discontinuity
+
+\subsubsection{Key Models}
+% - RoI Transformer: learns spatial transformation from HBB proposals to OBB
+%   via RoI-Wise Transformations, two-stage approach
+% - Oriented R-CNN: two-stage, uses midpoint offset representation for OBB
+%   proposals, more efficient than RoI Transformer
+% - Oriented FCOS: anchor-free, predicts OBB directly per pixel,
+%   avoids anchor hyperparameter tuning
+
+
+\subsection{Datasets and Evaluation}
+
+\subsubsection{Benchmark Datasets}
+% - DOTA (Dataset for Object deTection in Aerial images):
+%   * Largest and most widely used aerial detection benchmark
+%   * OBB annotations, 15 object categories (vehicles, ships, planes, ...)
+%   * DOTA-v1.0, v1.5, v2.0 with increasing size and categories
+% - DIOR (Object Detection in Optical Remote sensing):
+%   * 20 categories, balanced distribution, simpler annotations (HBB)
+%   * Good for baseline comparisons
+% - xView:
+%   * Real satellite imagery, very small objects, 60 categories
+%   * Challenging due to extreme scale and resolution variation
+
+\subsubsection{Evaluation Metrics}
+% - mAP (mean Average Precision) recap: area under PR curve, averaged over classes
+% - IoU for OBB differs from standard axis-aligned IoU:
+%   * Rotated rectangle intersection is non-trivial to compute
+%   * Approximations vs. exact polygon intersection
+% - Typical threshold: mAP@0.5 (IoU > 0.5 counts as true positive)
+% - Some works report mAP@0.5:0.95 for stricter evaluation
+
+
+%%%-----------------------------------------------------------------------------
+
+\section{Exercises and Homeworks}
+
+
+
+%%%-----------------------------------------------------------------------------
+
+\section*{References}
+
+\printbibliography[heading=noheader]
+
+%%%-----------------------------------------------------------------------------
+\end{document}
+%%%-----------------------------------------------------------------------------
