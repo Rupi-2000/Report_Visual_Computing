@@ -77,9 +77,28 @@ Finally, aerial imagery often suffers from a strong foreground-background imbala
 \subsection{Oriented Object Detection}
 
 \subsubsection{Limitations of Horizontal Bounding Boxes}
-% - Illustrate with example: rotated ship detected with huge HBB → lots of background included
-% - High overlap between HBBs → NMS removes correct detections
-% - Quantitative argument: IoU drops significantly for rotated objects with HBB
+
+Horizontal bounding boxes (HBBs) are the standard representation in general object detection, but they are often insufficient for aerial imagery. Since objects in overhead images can appear at arbitrary angles, an axis-aligned box may not match the actual object shape. For example, a rotated ship or vehicle can only be enclosed by a much larger horizontal rectangle, which includes a large amount of irrelevant background. This reduces the consistency between the visual features inside the box and the actual object, making classification and localization less reliable \cite{ding2021object,ding2018learning}.
+
+This problem becomes more severe in dense scenes. In harbors, parking lots, airports, or traffic areas, multiple objects are often located close to each other. A single horizontal box may therefore cover not only the target object, but also neighboring instances. As a result, the extracted region features become ambiguous, because they may contain several objects at once. This also affects post-processing: when several horizontal boxes overlap strongly, non-maximum suppression (NMS) can incorrectly remove valid detections of nearby objects \cite{ding2018learning}.
+
+The geometric disadvantage of HBBs can also be illustrated quantitatively. If an oriented rectangle with width $w$, height $h$, and rotation angle $\theta$ is enclosed by its axis-aligned bounding box, the enclosing box has the approximate dimensions
+
+\begin{equation}
+    W = w|\cos\theta| + h|\sin\theta|,
+    \qquad
+    H = w|\sin\theta| + h|\cos\theta|.
+\end{equation}
+
+The ratio between the oriented object area and the enclosing horizontal box area is therefore
+
+\begin{equation}
+    \mathrm{IoU}_{OBB,HBB}
+    =
+    \frac{w h}{W H}.
+\end{equation}
+
+For an elongated object with an aspect ratio of $5:1$ rotated by $45^\circ$, this ratio drops to approximately $0.28$. This means that more than two thirds of the horizontal box area consists of background. For even more elongated objects, such as ships, the mismatch becomes larger. Therefore, oriented bounding boxes (OBBs) are better suited for aerial imagery, because they can align with the object direction and describe the actual object extent more precisely \cite{ding2021object,ding2018learning}.
 
 \subsubsection{Oriented Bounding Box Parametrization}
 % - OBB defined as (x, y, w, h, θ)
