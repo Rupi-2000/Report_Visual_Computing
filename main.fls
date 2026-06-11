@@ -572,6 +572,13 @@ INPUT C:\Program Files\MiKTeX\fonts\tfm\public\lm\ec-lmss12.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\lm\ec-lmss12.tfm
 INPUT C:\Users\rparz\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT C:\Program Files\MiKTeX\fonts\enc\dvips\lm\lm-ec.enc
+INPUT .\images\HBBs_OBBs_Vergleich.jpg
+INPUT .\images\HBBs_OBBs_Vergleich.jpg
+INPUT .\images\HBBs_OBBs_Vergleich.jpg
+INPUT .\images\HBBs_OBBs_Vergleich.jpg
+INPUT .\images\HBBs_OBBs_Vergleich.jpg
+INPUT .\images\HBBs_OBBs_Vergleich.jpg
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\lm\ec-lmbx10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\lm\rm-lmr10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\lm\lmmi10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\lm\lmsy10.tfm
@@ -585,6 +592,8 @@ INPUT C:\Program Files\MiKTeX\fonts\tfm\public\lm\ec-lmri10.tfm
 INPUT main.aux
 INPUT main.run.xml
 OUTPUT main.run.xml
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\lm\lmmi10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\lm\lmmi10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\lm\lmmi8.pfb
