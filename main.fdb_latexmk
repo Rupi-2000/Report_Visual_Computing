@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 1780670090.78533 "main.bcf" "main.bbl" "main" 1780670097.68986 0
-  "hgbreferences.bib" 1780668579 2929 119f2a2478e8562b1e2fea4399faa5ff ""
-  "main.bcf" 1780670097 111365 72dc8eead4581982e2cd4b20fc997a48 "pdflatex"
+["biber main"] 1781162953.9787 "main.bcf" "main.bbl" "main" 1781162967.72945 0
+  "hgbreferences.bib" 1781162858 3342 c4e6495f107c29df830e9dae49a318bc ""
+  "main.bcf" 1781162967 112655 42c5de9dd6ec9a2237a6b156c3b88adf "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1780670093.72632 "c:/Users/rparz/Nextcloud/FH_Hagenberg/2.Semester/Visual Computing/Related-Work/Report_Latex/main.tex" "main.pdf" "main" 1780670097.69089 0
+["pdflatex"] 1781162963.97664 "c:/Users/rparz/Nextcloud/FH_Hagenberg/2.Semester/Visual Computing/Related-Work/Report_Latex/main.tex" "main.pdf" "main" 1781162967.73045 0
   "C:/Program Files/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
   "C:/Program Files/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc" 1256929440 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "C:/Program Files/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc" 1256929440 2840 216e6e45ad352e2456e1149f28885bee ""
@@ -296,7 +296,7 @@
   "C:/Program Files/MiKTeX/tex/latex/xstring/xstring.sty" 1693735632 123 a302f2c651a95033260db60e51527ae8 ""
   "C:/Users/rparz/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1780663626 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/rparz/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1780663717 13342974 a95aa1871be7dc92d0504a681e99035f ""
-  "c:/Users/rparz/Nextcloud/FH_Hagenberg/2.Semester/Visual Computing/Related-Work/Report_Latex/main.tex" 1780670095 13490 07662937afe254b8dbd79d50ee12bde6 ""
+  "c:/Users/rparz/Nextcloud/FH_Hagenberg/2.Semester/Visual Computing/Related-Work/Report_Latex/main.tex" 1781162949 20452 e4f5333c83b799de65de71baf6c62533 ""
   "hgb.sty" 1780661713 15814 4901d52a22b643b81d7443adde2a0225 ""
   "hgbabbrev.sty" 1780661713 1888 d7ac68789ca20bc580552bb520d531e6 ""
   "hgbalgo.sty" 1780661713 4778 2aa514ebd1456f0c475e0a3522582602 ""
@@ -308,10 +308,10 @@
   "hgbpdfa.sty" 1780661713 1259 46f03ff3e26fe90b6f066f6cce83a277 ""
   "hgbreport.cls" 1780661713 3888 70bec1c45453b7de1689f642dbb23802 ""
   "hgbvars.sty" 1780661713 2720 55791496ab3d940fce6b6c01559b9669 ""
-  "main.aux" 1780670097 7559 e9b08708301bf82bf3fcfceb6df93397 "pdflatex"
-  "main.bbl" 1780670093 14326 cf392f4dec1bf91716812bb3baa4618d "biber main"
-  "main.run.xml" 1780670097 2410 f3b04df3217d3b0c8e8b03067c12c710 "pdflatex"
-  "main.tex" 1780670095 13490 07662937afe254b8dbd79d50ee12bde6 ""
+  "main.aux" 1781162967 10199 6257ba2028accf7803bf0129acc389e5 "pdflatex"
+  "main.bbl" 1781162956 20170 999af32cd6cbdc49a8ca794782090103 "biber main"
+  "main.run.xml" 1781162967 2410 f3b04df3217d3b0c8e8b03067c12c710 "pdflatex"
+  "main.tex" 1781162949 20452 e4f5333c83b799de65de71baf6c62533 ""
   (generated)
   "main.aux"
   "main.bcf"
