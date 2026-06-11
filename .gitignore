@@ -1,0 +1,76 @@
+# LaTeX build artifacts
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# Bibliography
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# Glossaries
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+*.slg
+*.slo
+*.sls
+
+# Nomenclature
+*.nlg
+*.nlo
+*.nls
+
+# Index
+*.idx
+*.ilg
+*.ind
+*.ist
+
+# Figures / TikZ cache
+*.pdf_tex
+*-converted-to.*
+*.tikzmake
+
+# LaTeXmk
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Minted (code highlighting)
+_minted*/
+
+# Beamer
+*.nav
+*.pre
+*.snm
+*.vrb
+
+# Misc
+*.dvi
+*.xdv
+*.lol
+*.xmpdata
+*.xmpi
+*.eps_tex

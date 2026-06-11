@@ -351,6 +351,145 @@
       \field{pages}{2980\bibrangedash 2988}
       \range{pages}{9}
     \endentry
+    \entry{xie2021oriented}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=8c262f5ba8ff490169efd13cc0a52b39}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={Xingxing},
+           giveni={X\bibinitperiod}}}%
+        {{hash=8f8c67320b6baecc329cfb36911104e1}{%
+           family={Cheng},
+           familyi={C\bibinitperiod},
+           given={Gong},
+           giveni={G\bibinitperiod}}}%
+        {{hash=04dd20c5a611a9a8338336d0c7586fe1}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Jiabao},
+           giveni={J\bibinitperiod}}}%
+        {{hash=fda0967ec4f4cfd56a12143bc737a59e}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={Xiwen},
+           giveni={X\bibinitperiod}}}%
+        {{hash=19b9723645f5a1e1abb104400e9352d6}{%
+           family={Han},
+           familyi={H\bibinitperiod},
+           given={Junwei},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{786a92b5c3d8fbf04d1216c5a95b52cd}
+      \strng{fullhash}{4d6d5da7503a267267ac2d7b4db94af6}
+      \strng{fullhashraw}{4d6d5da7503a267267ac2d7b4db94af6}
+      \strng{bibnamehash}{786a92b5c3d8fbf04d1216c5a95b52cd}
+      \strng{authorbibnamehash}{786a92b5c3d8fbf04d1216c5a95b52cd}
+      \strng{authornamehash}{786a92b5c3d8fbf04d1216c5a95b52cd}
+      \strng{authorfullhash}{4d6d5da7503a267267ac2d7b4db94af6}
+      \strng{authorfullhashraw}{4d6d5da7503a267267ac2d7b4db94af6}
+      \field{sortinit}{X}
+      \field{sortinithash}{1965c258adceecf23ce3d67b05113442}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the IEEE/CVF international conference on computer vision}
+      \field{title}{Oriented R-CNN for object detection}
+      \field{year}{2021}
+      \field{pages}{3520\bibrangedash 3529}
+      \range{pages}{10}
+    \endentry
+    \entry{yang2022arbitrary}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=fe920e945a6d8874d464d610dfa3fd12}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Xue},
+           giveni={X\bibinitperiod}}}%
+        {{hash=9a7a7c8d0b927c0b0f6c62cef2f118d5}{%
+           family={Yan},
+           familyi={Y\bibinitperiod},
+           given={Junchi},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{fc37cc6fd34703832dfa1db3ec40d39c}
+      \strng{fullhash}{fc37cc6fd34703832dfa1db3ec40d39c}
+      \strng{fullhashraw}{fc37cc6fd34703832dfa1db3ec40d39c}
+      \strng{bibnamehash}{fc37cc6fd34703832dfa1db3ec40d39c}
+      \strng{authorbibnamehash}{fc37cc6fd34703832dfa1db3ec40d39c}
+      \strng{authornamehash}{fc37cc6fd34703832dfa1db3ec40d39c}
+      \strng{authorfullhash}{fc37cc6fd34703832dfa1db3ec40d39c}
+      \strng{authorfullhashraw}{fc37cc6fd34703832dfa1db3ec40d39c}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Computer Vision}
+      \field{number}{5}
+      \field{title}{On the arbitrary-oriented object detection: Classification based approaches revisited}
+      \field{volume}{130}
+      \field{year}{2022}
+      \field{pages}{1340\bibrangedash 1365}
+      \range{pages}{26}
+    \endentry
+    \entry{yang2021learning}{inproceedings}{}{}
+      \name{author}{7}{}{%
+        {{hash=fe920e945a6d8874d464d610dfa3fd12}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Xue},
+           giveni={X\bibinitperiod}}}%
+        {{hash=dfb1627ae761de45a1596cf00afe0b41}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Xiaojiang},
+           giveni={X\bibinitperiod}}}%
+        {{hash=88c4b2c87c8b304206d0a216e0e7a488}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Jirui},
+           giveni={J\bibinitperiod}}}%
+        {{hash=44b36b0bbca3ded3b6482d42e9d49ccf}{%
+           family={Ming},
+           familyi={M\bibinitperiod},
+           given={Qi},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=cd807a4a7aa48643ee00c73419897e2b}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Wentao},
+           giveni={W\bibinitperiod}}}%
+        {{hash=9632951617f2079b7d7fa6a955341020}{%
+           family={Tian},
+           familyi={T\bibinitperiod},
+           given={Qi},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=9a7a7c8d0b927c0b0f6c62cef2f118d5}{%
+           family={Yan},
+           familyi={Y\bibinitperiod},
+           given={Junchi},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{6d10cfc8cf9f375f496ee2705cbcc3a0}
+      \strng{fullhash}{eab20eb099b27ca574d0e4eb11a6b63d}
+      \strng{fullhashraw}{eab20eb099b27ca574d0e4eb11a6b63d}
+      \strng{bibnamehash}{6d10cfc8cf9f375f496ee2705cbcc3a0}
+      \strng{authorbibnamehash}{6d10cfc8cf9f375f496ee2705cbcc3a0}
+      \strng{authornamehash}{6d10cfc8cf9f375f496ee2705cbcc3a0}
+      \strng{authorfullhash}{eab20eb099b27ca574d0e4eb11a6b63d}
+      \strng{authorfullhashraw}{eab20eb099b27ca574d0e4eb11a6b63d}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Advances in Neural Information Processing Systems}
+      \field{title}{Learning High-Precision Bounding Box for Rotated Object Detection via {Kullback-Leibler} Divergence}
+      \field{volume}{34}
+      \field{year}{2021}
+      \field{pages}{18381\bibrangedash 18394}
+      \range{pages}{14}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

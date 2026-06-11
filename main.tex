@@ -61,6 +61,20 @@ These properties make direct transfer of standard object detectors to aerial and
 
 This chapter reviews the main challenges and methods for object detection in aerial and satellite imagery. First, it discusses important challenges such as scale variation, arbitrary object orientation, dense object distributions, large image sizes, and foreground-background imbalance. Second, it introduces oriented object detection and explains why horizontal bounding boxes are often insufficient for overhead imagery. Finally, relevant benchmark datasets and evaluation metrics are summarized, with particular attention to widely used datasets such as DOTA, DIOR, and xView.
 
+\subsection{Object Detection Fundamentals}
+
+Modern object detection aims to solve two tasks simultaneously: object localization and object classification. Localization determines the spatial position of an object, usually by predicting a bounding box, while classification assigns a semantic class label to the detected object. In the standard setting, objects are represented by horizontal bounding boxes, which are commonly described by the center coordinates, width, and height of the box. In aerial and satellite imagery, this basic formulation is still important, but it is often extended by orientation information because many objects are not aligned with the image axes \cite{li2020object,ding2021object}.
+
+Deep learning based object detectors are commonly divided into two-stage and one-stage approaches. Two-stage detectors first generate a set of candidate object regions and then classify and refine these regions in a second step. Faster R-CNN is a representative example of this model family. It uses a Region Proposal Network (RPN) to generate object proposals and a second detection head to classify the proposals and improve their bounding box coordinates. Two-stage detectors are often used as strong baselines because they usually provide high localization accuracy, although their inference speed is typically lower than that of one-stage methods \cite{li2020object}.
+
+One-stage detectors simplify the detection pipeline by predicting object classes and bounding boxes directly from dense feature maps, without a separate proposal generation stage. Typical examples include YOLO, SSD, and RetinaNet. These methods are usually faster than two-stage detectors and are therefore relevant for applications where inference time is important, such as drone imagery or near-real-time remote sensing analysis. However, dense one-stage detection also introduces a strong foreground-background imbalance, because the model evaluates a large number of possible object locations while only a small fraction contains actual objects. RetinaNet addresses this issue with Focal Loss, which reduces the influence of easy background examples during training \cite{li2020object,lin2017focal}.
+
+A further important component of modern object detectors is multi-scale feature extraction. Objects in aerial images can have very different sizes: small vehicles may occupy only a few pixels, while buildings, airports, or harbors can cover large image regions. Feature Pyramid Networks (FPN) address this problem by constructing feature maps at multiple scales inside the network. This allows small objects to be detected using high-resolution feature maps, while larger objects can be detected using lower-resolution, semantically stronger feature maps \cite{lin2017feature,ding2021object}.
+
+Object detectors are also often described by their backbone, neck, and detection head. The backbone, such as a convolutional neural network, extracts visual features from the input image. The neck, for example an FPN, combines features from different levels of the backbone. The detection head then predicts class probabilities and bounding box parameters. This modular structure is important because many remote-sensing detectors adapt general-purpose object detection architectures by modifying the feature extraction, proposal generation, or bounding box representation to better handle small, dense, and rotated objects \cite{li2020object,ding2021object}.
+
+In aerial and satellite imagery, standard object detection models are therefore often used as baselines, but they are not always sufficient. The overhead perspective causes arbitrary object orientations, strong scale variation, dense object distributions, large image sizes, and complex backgrounds. As a result, remote-sensing object detection often requires additional adaptations, such as multi-scale feature pyramids, tiling strategies for large images, and oriented bounding boxes for rotated objects \cite{ding2021object,lam2018xview}.
+
 \subsection{Challenges in Aerial Imagery}
 
 A major challenge in aerial and satellite imagery is the strong variation in object scale. Small objects such as cars or small vehicles may occupy only a few pixels, while large structures such as airports, harbors, bridges, or industrial buildings can cover large image regions. This makes single-scale detection insufficient, because a feature representation that is suitable for large objects often lacks the spatial detail needed for small objects. Feature Pyramid Networks (FPN) address this problem by constructing multi-scale feature representations inside the network, allowing detections to be made at different feature levels \cite{ding2021object,lam2018xview,lin2017feature}.
@@ -101,27 +115,45 @@ The ratio between the oriented object area and the enclosing horizontal box area
 For an elongated object with an aspect ratio of $5:1$ rotated by $45^\circ$, this ratio drops to approximately $0.28$. This means that more than two thirds of the horizontal box area consists of background. For even more elongated objects, such as ships, the mismatch becomes larger. Therefore, oriented bounding boxes (OBBs) are better suited for aerial imagery, because they can align with the object direction and describe the actual object extent more precisely \cite{ding2021object,ding2018learning}.
 
 \subsubsection{Oriented Bounding Box Parametrization}
-% - OBB defined as (x, y, w, h, θ)
-% - What θ represents: rotation angle, typical range [0°, 180°) or [-90°, 90°)
-% - Two conventions: OpenCV (long edge as width) vs. long-edge definition
-% - Why this parametrization is more precise for aerial objects
+
+An oriented bounding box (OBB) extends the conventional horizontal bounding box by adding an orientation parameter. A common five-parameter representation is defined as
+
+\begin{equation}
+    B_{obb} = (x, y, w, h, \theta),
+\end{equation}
+
+where $(x,y)$ denotes the center point of the box, $w$ and $h$ describe its width and height, and $\theta$ represents the rotation angle of the rectangle. In contrast to a horizontal bounding box, an OBB can rotate with the object and therefore provides a tighter localization for objects that are not aligned with the image axes \cite{ding2021object,yang2022arbitrary}.
+
+The angle $\theta$ defines the orientation of the bounding box relative to the horizontal image axis. Different works and implementations use different angle ranges. Common choices are $\theta \in [0^\circ, 180^\circ)$ or $\theta \in [-90^\circ, 90^\circ)$. These ranges are sufficient because a rectangle rotated by $180^\circ$ describes the same spatial region as the original rectangle. Therefore, the representation must avoid redundant angle definitions while still describing all possible object orientations \cite{yang2022arbitrary,xie2021oriented}.
+
+A practical difficulty is that different OBB conventions define $w$, $h$, and $\theta$ differently. In an OpenCV-style representation, the angle is tied to a specific rectangle side and the width and height may be swapped depending on the rotation. In contrast, long-edge definitions usually define the angle with respect to the longer side of the rectangle. As a result, the same physical box can have different numerical representations depending on the chosen convention. This is important because inconsistent angle conventions can lead to discontinuities during training and evaluation \cite{yang2022arbitrary}.
+
+For aerial imagery, this parametrization is more precise than horizontal bounding boxes because many objects, such as ships, airplanes, vehicles, bridges, and storage tanks, appear with arbitrary orientations. By aligning the bounding box with the object direction, OBBs reduce the amount of included background and better separate neighboring objects in dense scenes. This makes them especially useful for oriented object detection in aerial and satellite images \cite{ding2021object,ding2018learning,xie2021oriented}.
 
 \subsubsection{Angle Regression Challenges}
-% - Boundary discontinuity problem: 0° and 180° are the same orientation
-%   but have maximum numerical distance → loss spikes at boundaries
-% - Square-like objects: w/h ambiguity → 90° rotation looks identical
-% - Solutions:
-%   * Circular Smooth Label (CSL): converts angle to classification problem
-%   * KLD Loss: models box as Gaussian, uses KL-Divergence instead of L1
-%   * Gaussian representation: encodes box uncertainty, avoids discontinuity
+
+Although oriented bounding boxes provide a more precise object representation for aerial imagery, their angle parameter introduces additional regression challenges. A common problem is the boundary discontinuity of angle regression. Since rectangular boxes are periodic, an orientation of $0^\circ$ and $180^\circ$ can describe the same spatial direction, but a standard regression loss treats them as numerically far apart. For example, a prediction of $179^\circ$ for a ground-truth angle of $0^\circ$ may be geometrically almost correct, while an L1 or Smooth-L1 loss produces a large error. This causes loss spikes near the angle boundary and makes training unstable \cite{yang2022arbitrary}.
+
+A second issue is the ambiguity of width, height, and angle. For square-like objects, a rotation by $90^\circ$ can result in nearly the same bounding box, because width and height are almost interchangeable. Even for rectangular objects, different angle conventions may swap $w$ and $h$ at certain boundary cases. This means that two numerically different parameter sets can describe almost identical boxes. As a result, directly regressing $(x, y, w, h, \theta)$ can lead to discontinuous targets and inconsistent gradients during training \cite{yang2022arbitrary}.
+
+One solution is Circular Smooth Label (CSL), which reformulates angle prediction as a classification task instead of a direct regression task. In this approach, the continuous angle space is divided into discrete bins, and the periodic nature of angles is modeled by circular labels. Therefore, angles close to each other across the boundary, such as $0^\circ$ and $179^\circ$, are also treated as neighboring classes. This reduces the boundary discontinuity problem and increases the tolerance to small angular deviations \cite{yang2022arbitrary}.
+
+Another line of work avoids direct angle regression by representing rotated bounding boxes as Gaussian distributions. Instead of comparing the five box parameters independently with an L1-type loss, the predicted and ground-truth boxes are converted into two-dimensional Gaussian distributions. The distance between both boxes can then be measured using Kullback--Leibler Divergence (KLD). This couples position, size, and orientation in a single loss function and can adapt the importance of angle errors depending on the object shape. This is especially useful for elongated objects such as ships or vehicles, where small angle errors can strongly reduce the localization quality \cite{yang2021learning}.
+
+Overall, angle prediction is difficult because the numerical representation of an oriented box is not always continuous, unique, or equally sensitive for all object shapes. CSL addresses this problem by treating angle prediction as circular classification, while KLD-based Gaussian representations address it by comparing whole boxes as probability distributions rather than isolated parameters. Both approaches aim to make oriented object detection more stable and better aligned with the geometric properties of rotated objects \cite{yang2022arbitrary,yang2021learning}.
+
 
 \subsubsection{Key Models}
-% - RoI Transformer: learns spatial transformation from HBB proposals to OBB
-%   via RoI-Wise Transformations, two-stage approach
-% - Oriented R-CNN: two-stage, uses midpoint offset representation for OBB
-%   proposals, more efficient than RoI Transformer
-% - Oriented FCOS: anchor-free, predicts OBB directly per pixel,
-%   avoids anchor hyperparameter tuning
+
+A central model for oriented object detection in aerial imagery is the RoI Transformer. It follows a two-stage detection framework and addresses the mismatch between horizontal region proposals and arbitrarily oriented objects. Instead of directly relying on horizontal Regions of Interest (HRoIs), the RoI Transformer learns a transformation from HRoIs to rotated Regions of Interest (RRoIs). This transformation is performed by a trainable RRoI Learner. The resulting RRoIs are then used for rotation-aware feature extraction through Rotated Position-Sensitive RoI Align. This improves the alignment between region features and object geometry, especially in dense aerial scenes where horizontal boxes may contain several neighboring objects \cite{ding2018learning}.
+
+Oriented R-CNN is another important two-stage detector for oriented object detection. Its main contribution is a more efficient way of generating oriented proposals. Earlier oriented detectors often used rotated anchors with multiple scales, aspect ratios, and angles, which increases computational cost. RoI Transformer avoids many rotated anchors by learning transformations from horizontal proposals, but still adds an additional proposal transformation stage. Oriented R-CNN instead introduces a lightweight oriented Region Proposal Network that directly generates oriented proposals. It uses a midpoint offset representation to describe oriented boxes and then applies an oriented detection head to classify and refine the proposals \cite{xie2021oriented}.
+
+Compared with RoI Transformer, Oriented R-CNN focuses more strongly on reducing the computational bottleneck of proposal generation. Xie et al. argue that producing oriented proposals is one of the main efficiency limitations in many two-stage oriented detectors. By generating oriented proposals in a simpler and nearly cost-free manner, Oriented R-CNN achieves a better balance between accuracy and speed while remaining compatible with the two-stage detection framework \cite{xie2021oriented}.
+
+In addition to detector architectures, several works address the representation and learning of oriented bounding boxes. Angle prediction is challenging because rotated boxes can suffer from boundary discontinuities and ambiguous parameterizations. Classification-based approaches such as Circular Smooth Label (CSL) reformulate angle prediction as a classification problem to better handle angular periodicity. Kullback-Leibler-Divergence-based losses represent rotated bounding boxes as Gaussian distributions and compare predicted and ground-truth boxes at the distribution level. These approaches improve the learning of oriented boxes and complement detector architectures such as RoI Transformer and Oriented R-CNN \cite{yang2022arbitrary,yang2021learning}.
+
+Overall, RoI Transformer and Oriented R-CNN show how standard two-stage object detectors can be adapted to aerial imagery by replacing or extending horizontal proposals with oriented proposals. Together with improved angle representations and loss functions, these models address the central limitation of conventional detectors: their inability to precisely localize arbitrarily oriented objects in dense overhead scenes \cite{ding2018learning,xie2021oriented,yang2022arbitrary,yang2021learning}.
 
 
 \subsection{Datasets and Evaluation}
@@ -149,7 +181,7 @@ For an elongated object with an aspect ratio of $5:1$ rotated by $45^\circ$, thi
 
 %%%-----------------------------------------------------------------------------
 
-\section{Exercises and Homeworks}
+\section{Homeworks}
 
 
 
