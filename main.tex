@@ -90,9 +90,19 @@ Finally, aerial imagery often suffers from a strong foreground-background imbala
 
 \subsection{Oriented Object Detection}
 
+Oriented object detection extends conventional object detection by representing objects with rotated bounding boxes instead of only horizontal bounding boxes. This is especially important in aerial and satellite imagery, where objects such as ships, vehicles, airplanes, and buildings can appear at arbitrary orientations. Fig.~\ref{fig:hbb_obb_comparison} illustrates the difference between horizontal bounding boxes and oriented bounding boxes.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{HBBs_OBBs_Vergleich.jpg}
+    \caption{Comparison of horizontal bounding boxes and oriented bounding boxes for rotated objects.}
+    \label{fig:hbb_obb_comparison}
+\end{figure}
+
+
 \subsubsection{Limitations of Horizontal Bounding Boxes}
 
-Horizontal bounding boxes (HBBs) are the standard representation in general object detection, but they are often insufficient for aerial imagery. Since objects in overhead images can appear at arbitrary angles, an axis-aligned box may not match the actual object shape. For example, a rotated ship or vehicle can only be enclosed by a much larger horizontal rectangle, which includes a large amount of irrelevant background. This reduces the consistency between the visual features inside the box and the actual object, making classification and localization less reliable \cite{ding2021object,ding2018learning}.
+Horizontal bounding boxes (HBBs) are the standard representation in general object detection, but they are often insufficient for aerial imagery. Since objects in overhead images can appear at arbitrary angles, an axis-aligned box may not match the actual object shape. As illustrated in Fig.~\ref{fig:hbb_obb_comparison}, a rotated object can only be enclosed by a much larger horizontal rectangle, which includes a large amount of irrelevant background. This reduces the consistency between the visual features inside the box and the actual object, making classification and localization less reliable \cite{ding2021object,ding2018learning}.
 
 This problem becomes more severe in dense scenes. In harbors, parking lots, airports, or traffic areas, multiple objects are often located close to each other. A single horizontal box may therefore cover not only the target object, but also neighboring instances. As a result, the extracted region features become ambiguous, because they may contain several objects at once. This also affects post-processing: when several horizontal boxes overlap strongly, non-maximum suppression (NMS) can incorrectly remove valid detections of nearby objects \cite{ding2018learning}.
 
@@ -122,7 +132,7 @@ An oriented bounding box (OBB) extends the conventional horizontal bounding box 
     B_{obb} = (x, y, w, h, \theta),
 \end{equation}
 
-where $(x,y)$ denotes the center point of the box, $w$ and $h$ describe its width and height, and $\theta$ represents the rotation angle of the rectangle. In contrast to a horizontal bounding box, an OBB can rotate with the object and therefore provides a tighter localization for objects that are not aligned with the image axes \cite{ding2021object,yang2022arbitrary}.
+where $(x,y)$ denotes the center point of the box, $w$ and $h$ describe its width and height, and $\theta$ represents the rotation angle of the rectangle. In contrast to a horizontal bounding box, an OBB can rotate with the object and therefore provides a tighter localization for objects that are not aligned with the image axes. This difference is shown in Fig.~\ref{fig:hbb_obb_comparison}, where the oriented bounding box follows the object direction and contains less background than the corresponding horizontal bounding box \cite{ding2021object,yang2022arbitrary}.
 
 The angle $\theta$ defines the orientation of the bounding box relative to the horizontal image axis. Different works and implementations use different angle ranges. Common choices are $\theta \in [0^\circ, 180^\circ)$ or $\theta \in [-90^\circ, 90^\circ)$. These ranges are sufficient because a rectangle rotated by $180^\circ$ describes the same spatial region as the original rectangle. Therefore, the representation must avoid redundant angle definitions while still describing all possible object orientations \cite{yang2022arbitrary,xie2021oriented}.
 
