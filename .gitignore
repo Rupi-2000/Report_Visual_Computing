@@ -1,0 +1,56 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Bibliography and glossaries
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.ist
+*.loa
+*.lol
+
+# Beamer
+*.nav
+*.snm
+*.vrb
+
+# latexmk and build directories
+*.dvi
+*.ps
+*.synctex
+_minted-*/
+build/
+out/
+
+# Editor and OS files
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary TeX files
+*.bak
+*.tmp
+*.backup
