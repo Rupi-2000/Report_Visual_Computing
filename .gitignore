@@ -1,23 +1,26 @@
 # LaTeX build artifacts
 *.aux
-*.bbl
-*.bcf
-*.blg
-*.fdb_latexmk
-*.fls
-*.idx
-*.ilg
-*.ind
 *.lof
 *.log
 *.lot
+*.fls
 *.out
-*.run.xml
-*.synctex.gz
 *.toc
-*.xdv
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
 
-# Bibliography and glossaries
+# Bibliography
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# Glossaries
 *.acn
 *.acr
 *.alg
@@ -25,32 +28,49 @@
 *.glo
 *.gls
 *.glsdefs
+*.lzo
+*.lzs
+*.slg
+*.slo
+*.sls
+
+# Nomenclature
+*.nlg
+*.nlo
+*.nls
+
+# Index
+*.idx
+*.ilg
+*.ind
 *.ist
-*.loa
-*.lol
+
+# Figures / TikZ cache
+*.pdf_tex
+*-converted-to.*
+*.tikzmake
+
+# LaTeXmk
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Minted (code highlighting)
+_minted*/
 
 # Beamer
 *.nav
+*.pre
 *.snm
 *.vrb
 
-# latexmk and build directories
+# Misc
 *.dvi
-*.ps
-*.synctex
-_minted-*/
-build/
-out/
-
-# Editor and OS files
-*.swp
-*.swo
-*~
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Temporary TeX files
-*.bak
-*.tmp
-*.backup
+*.xdv
+*.lol
+*.xmpdata
+*.xmpi
+*.eps_tex
