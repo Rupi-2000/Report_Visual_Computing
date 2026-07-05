@@ -561,6 +561,9 @@ INPUT C:\Program Files\MiKTeX\tex\latex\amsfonts\umsb.fd
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT .\sections\related_work.tex
+INPUT .\sections\related_work.tex
+INPUT sections\related_work.tex
 INPUT C:\Program Files\MiKTeX\tex\latex\lm\t1lmss.fd
 INPUT C:\Program Files\MiKTeX\tex\latex\lm\t1lmss.fd
 INPUT C:\Program Files\MiKTeX\tex\latex\lm\t1lmss.fd
@@ -586,6 +589,12 @@ INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\enc\dvips\lm\lm-mathit.enc
 INPUT C:\Program Files\MiKTeX\fonts\enc\dvips\lm\lm-rm.enc
 INPUT C:\Program Files\MiKTeX\fonts\enc\dvips\lm\lm-mathsy.enc
+INPUT .\sections\hw01_calibration.tex
+INPUT .\sections\hw01_calibration.tex
+INPUT sections\hw01_calibration.tex
+INPUT .\sections\hw02_compression.tex
+INPUT .\sections\hw02_compression.tex
+INPUT sections\hw02_compression.tex
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\lm\ec-lmri10.tfm
 INPUT main.aux
 INPUT main.run.xml
