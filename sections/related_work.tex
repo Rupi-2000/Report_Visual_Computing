@@ -1,0 +1,181 @@
+\section{Related Work: Object Detection in Aerial and Satellite Imagery}
+
+
+\subsection{Overview}
+
+Object detection in aerial and satellite imagery refers to the automatic localization and classification of objects of interest in overhead images of the Earth's surface. Typical target objects include vehicles, ships, airplanes, buildings, storage tanks, roads, and other man-made structures. This task is an important component of remote sensing image interpretation and supports a wide range of applications, such as urban planning, geographic information system updating, disaster response, precision agriculture, environmental monitoring, and security-related analysis \cite{li2020object,ding2021object}.
+
+Although object detection has been widely studied in natural images, aerial and satellite imagery introduces several domain-specific characteristics that make the task fundamentally different from ground-level detection. Natural images usually capture objects from a horizontal perspective and show their profile information, whereas remote sensing images are acquired from an overhead perspective and mainly capture roof or top-view information \cite{li2020object}. As a result, object appearance, scale, orientation, and surrounding context differ substantially from standard computer vision datasets. In addition, aerial images often contain objects with arbitrary orientations, large scale variations, dense object distributions, complex backgrounds, and very large image sizes \cite{ding2021object}.
+
+These properties make direct transfer of standard object detectors to aerial and satellite imagery difficult. For example, small vehicles may occupy only a few pixels, while airports or harbors can span large regions of an image. Objects such as ships, airplanes, and vehicles are often not aligned with the image axes, which motivates the use of oriented bounding boxes instead of conventional horizontal bounding boxes \cite{ding2021object}. Furthermore, large satellite or aerial images often need to be processed using tiling or sliding-window strategies because they cannot be passed through detection networks at full resolution.
+
+This chapter reviews the main challenges and methods for object detection in aerial and satellite imagery. First, it discusses important challenges such as scale variation, arbitrary object orientation, dense object distributions, large image sizes, and foreground-background imbalance. Second, it introduces oriented object detection and explains why horizontal bounding boxes are often insufficient for overhead imagery. Finally, relevant benchmark datasets and evaluation metrics are summarized, with particular attention to widely used datasets such as DOTA, DIOR, and xView.
+
+\subsection{Object Detection Fundamentals}
+
+Modern object detection aims to solve two tasks simultaneously: object localization and object classification. Localization determines the spatial position of an object, usually by predicting a bounding box, while classification assigns a semantic class label to the detected object. In the standard setting, objects are represented by horizontal bounding boxes, which are commonly described by the center coordinates, width, and height of the box. In aerial and satellite imagery, this basic formulation is still important, but it is often extended by orientation information because many objects are not aligned with the image axes \cite{li2020object,ding2021object}.
+
+Deep learning based object detectors are commonly divided into two-stage and one-stage approaches. Two-stage detectors first generate a set of candidate object regions and then classify and refine these regions in a second step. Faster R-CNN is a representative example of this model family. It uses a Region Proposal Network (RPN) to generate object proposals and a second detection head to classify the proposals and improve their bounding box coordinates. Two-stage detectors are often used as strong baselines because they usually provide high localization accuracy, although their inference speed is typically lower than that of one-stage methods \cite{li2020object}.
+
+One-stage detectors simplify the detection pipeline by predicting object classes and bounding boxes directly from dense feature maps, without a separate proposal generation stage. Typical examples include YOLO, SSD, and RetinaNet. These methods are usually faster than two-stage detectors and are therefore relevant for applications where inference time is important, such as drone imagery or near-real-time remote sensing analysis. However, dense one-stage detection also introduces a strong foreground-background imbalance, because the model evaluates a large number of possible object locations while only a small fraction contains actual objects. RetinaNet addresses this issue with Focal Loss, which reduces the influence of easy background examples during training \cite{li2020object,lin2017focal}.
+
+A further important component of modern object detectors is multi-scale feature extraction. Objects in aerial images can have very different sizes: small vehicles may occupy only a few pixels, while buildings, airports, or harbors can cover large image regions. Feature Pyramid Networks (FPN) address this problem by constructing feature maps at multiple scales inside the network. This allows small objects to be detected using high-resolution feature maps, while larger objects can be detected using lower-resolution, semantically stronger feature maps \cite{lin2017feature,ding2021object}.
+
+Object detectors are also often described by their backbone, neck, and detection head. The backbone, such as a convolutional neural network, extracts visual features from the input image. The neck, for example an FPN, combines features from different levels of the backbone. The detection head then predicts class probabilities and bounding box parameters. This modular structure is important because many remote-sensing detectors adapt general-purpose object detection architectures by modifying the feature extraction, proposal generation, or bounding box representation to better handle small, dense, and rotated objects \cite{li2020object,ding2021object}.
+
+In aerial and satellite imagery, standard object detection models are therefore often used as baselines, but they are not always sufficient. The overhead perspective causes arbitrary object orientations, strong scale variation, dense object distributions, large image sizes, and complex backgrounds. As a result, remote-sensing object detection often requires additional adaptations, such as multi-scale feature pyramids, tiling strategies for large images, and oriented bounding boxes for rotated objects \cite{ding2021object,lam2018xview}.
+
+\subsection{Challenges in Aerial Imagery}
+
+A major challenge in aerial and satellite imagery is the strong variation in object scale. Small objects such as cars or small vehicles may occupy only a few pixels, while large structures such as airports, harbors, bridges, or industrial buildings can cover large image regions. This makes single-scale detection insufficient, because a feature representation that is suitable for large objects often lacks the spatial detail needed for small objects. Feature Pyramid Networks (FPN) address this problem by constructing multi-scale feature representations inside the network, allowing detections to be made at different feature levels \cite{ding2021object,lam2018xview,lin2017feature}.
+
+Another important difference compared to ground-level imagery is the arbitrary orientation of objects. In aerial images, objects such as ships, airplanes, vehicles, or storage tanks are observed from a top-down perspective and are therefore not necessarily aligned with the horizontal or vertical image axes. Conventional horizontal bounding boxes (HBBs) can include large amounts of background for rotated objects and may localize them only imprecisely. For this reason, oriented bounding boxes (OBBs) are often more appropriate in aerial object detection, since they can represent the actual object extent more accurately \cite{ding2021object,ding2018learning}.
+
+Dense object distributions further complicate detection. In scenes such as parking lots, harbors, airports, or urban traffic areas, many objects can appear close to each other or even overlap in the image. In such cases, horizontal boxes may cover multiple neighboring instances, which can lead to ambiguous feature extraction and localization errors. Moreover, post-processing methods such as non-maximum suppression become more difficult in high-density scenes, because correct detections of nearby objects may have high overlap and can be suppressed incorrectly \cite{ding2021object,ding2018learning}.
+
+Large image sizes are another practical issue in aerial and satellite imagery. Remote sensing images can be much larger than typical natural images, and in Earth observation settings image sizes may reach tens of thousands of pixels in width and height. Such images cannot usually be processed directly by standard convolutional object detectors because of memory and computation limits. Therefore, large images are commonly divided into smaller tiles or processed using sliding-window strategies. However, this introduces trade-offs: overlapping tiles reduce the risk of cutting objects at tile borders but increase computation time, while smaller tiles may lose important contextual information \cite{ding2021object}.
+
+Finally, aerial imagery often suffers from a strong foreground-background imbalance. Most pixels in an overhead image usually belong to background regions such as roads, fields, water, rooftops, or bare ground, while the target objects occupy only a small fraction of the image. This imbalance is especially problematic for dense one-stage detectors, where many easy background examples can dominate the training process. Focal Loss addresses this issue by down-weighting well-classified examples and focusing the training more strongly on hard examples, which makes it a suitable theoretical solution for foreground-background imbalance in dense object detection \cite{lin2017focal}.
+
+
+\subsection{Oriented Object Detection}
+
+Oriented object detection extends conventional object detection by representing objects with rotated bounding boxes instead of only horizontal bounding boxes. This is especially important in aerial and satellite imagery, where objects such as ships, vehicles, airplanes, and buildings can appear at arbitrary orientations. Fig.~\ref{fig:hbb_obb_comparison} illustrates the difference between horizontal bounding boxes and oriented bounding boxes.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{HBBs_OBBs_Vergleich.jpg}
+    \caption{Comparison of horizontal bounding boxes and oriented bounding boxes for rotated objects.}
+    \label{fig:hbb_obb_comparison}
+\end{figure}
+
+
+\subsubsection{Limitations of Horizontal Bounding Boxes}
+
+Horizontal bounding boxes (HBBs) are the standard representation in general object detection, but they are often insufficient for aerial imagery. Since objects in overhead images can appear at arbitrary angles, an axis-aligned box may not match the actual object shape. As illustrated in Fig.~\ref{fig:hbb_obb_comparison}, a rotated object can only be enclosed by a much larger horizontal rectangle, which includes a large amount of irrelevant background. This reduces the consistency between the visual features inside the box and the actual object, making classification and localization less reliable \cite{ding2021object,ding2018learning}.
+
+This problem becomes more severe in dense scenes. In harbors, parking lots, airports, or traffic areas, multiple objects are often located close to each other. A single horizontal box may therefore cover not only the target object, but also neighboring instances. As a result, the extracted region features become ambiguous, because they may contain several objects at once. This also affects post-processing: when several horizontal boxes overlap strongly, non-maximum suppression (NMS) can incorrectly remove valid detections of nearby objects \cite{ding2018learning}.
+
+The geometric disadvantage of HBBs can also be illustrated quantitatively. If an oriented rectangle with width $w$, height $h$, and rotation angle $\theta$ is enclosed by its axis-aligned bounding box, the enclosing box has the approximate dimensions
+
+\begin{equation}
+    W = w|\cos\theta| + h|\sin\theta|,
+    \qquad
+    H = w|\sin\theta| + h|\cos\theta|.
+\end{equation}
+
+The ratio between the oriented object area and the enclosing horizontal box area is therefore
+
+\begin{equation}
+    \mathrm{IoU}_{OBB,HBB}
+    =
+    \frac{w h}{W H}.
+\end{equation}
+
+For an elongated object with an aspect ratio of $5:1$ rotated by $45^\circ$, this ratio drops to approximately $0.28$. This means that more than two thirds of the horizontal box area consists of background. For even more elongated objects, such as ships, the mismatch becomes larger. Therefore, oriented bounding boxes (OBBs) are better suited for aerial imagery, because they can align with the object direction and describe the actual object extent more precisely \cite{ding2021object,ding2018learning}.
+
+\subsubsection{Oriented Bounding Box Parametrization}
+
+An oriented bounding box (OBB) extends the conventional horizontal bounding box by adding an orientation parameter. A common five-parameter representation is defined as
+
+\begin{equation}
+    B_{obb} = (x, y, w, h, \theta),
+\end{equation}
+
+where $(x,y)$ denotes the center point of the box, $w$ and $h$ describe its width and height, and $\theta$ represents the rotation angle of the rectangle. In contrast to a horizontal bounding box, an OBB can rotate with the object and therefore provides a tighter localization for objects that are not aligned with the image axes. This difference is shown in Fig.~\ref{fig:hbb_obb_comparison}, where the oriented bounding box follows the object direction and contains less background than the corresponding horizontal bounding box \cite{ding2021object,yang2022arbitrary}.
+
+The angle $\theta$ defines the orientation of the bounding box relative to the horizontal image axis. Different works and implementations use different angle ranges. Common choices are $\theta \in [0^\circ, 180^\circ)$ or $\theta \in [-90^\circ, 90^\circ)$. These ranges are sufficient because a rectangle rotated by $180^\circ$ describes the same spatial region as the original rectangle. Therefore, the representation must avoid redundant angle definitions while still describing all possible object orientations \cite{yang2022arbitrary,xie2021oriented}.
+
+A practical difficulty is that different OBB conventions define $w$, $h$, and $\theta$ differently. In an OpenCV-style representation, the angle is tied to a specific rectangle side and the width and height may be swapped depending on the rotation. In contrast, long-edge definitions usually define the angle with respect to the longer side of the rectangle. As a result, the same physical box can have different numerical representations depending on the chosen convention. This is important because inconsistent angle conventions can lead to discontinuities during training and evaluation \cite{yang2022arbitrary}.
+
+For aerial imagery, this parametrization is more precise than horizontal bounding boxes because many objects, such as ships, airplanes, vehicles, bridges, and storage tanks, appear with arbitrary orientations. By aligning the bounding box with the object direction, OBBs reduce the amount of included background and better separate neighboring objects in dense scenes. This makes them especially useful for oriented object detection in aerial and satellite images \cite{ding2021object,ding2018learning,xie2021oriented}.
+
+\subsubsection{Angle Regression Challenges}
+
+Although oriented bounding boxes provide a more precise object representation for aerial imagery, their angle parameter introduces additional regression challenges. A common problem is the boundary discontinuity of angle regression. Since rectangular boxes are periodic, an orientation of $0^\circ$ and $180^\circ$ can describe the same spatial direction, but a standard regression loss treats them as numerically far apart. For example, a prediction of $179^\circ$ for a ground-truth angle of $0^\circ$ may be geometrically almost correct, while an L1 or Smooth-L1 loss produces a large error. This causes loss spikes near the angle boundary and makes training unstable \cite{yang2022arbitrary}.
+
+A second issue is the ambiguity of width, height, and angle. For square-like objects, a rotation by $90^\circ$ can result in nearly the same bounding box, because width and height are almost interchangeable. Even for rectangular objects, different angle conventions may swap $w$ and $h$ at certain boundary cases. This means that two numerically different parameter sets can describe almost identical boxes. As a result, directly regressing $(x, y, w, h, \theta)$ can lead to discontinuous targets and inconsistent gradients during training \cite{yang2022arbitrary}.
+
+One solution is Circular Smooth Label (CSL), which reformulates angle prediction as a classification task instead of a direct regression task. In this approach, the continuous angle space is divided into discrete bins, and the periodic nature of angles is modeled by circular labels. Therefore, angles close to each other across the boundary, such as $0^\circ$ and $179^\circ$, are also treated as neighboring classes. This reduces the boundary discontinuity problem and increases the tolerance to small angular deviations \cite{yang2022arbitrary}.
+
+Another line of work avoids direct angle regression by representing rotated bounding boxes as Gaussian distributions. Instead of comparing the five box parameters independently with an L1-type loss, the predicted and ground-truth boxes are converted into two-dimensional Gaussian distributions. The distance between both boxes can then be measured using Kullback--Leibler Divergence (KLD). This couples position, size, and orientation in a single loss function and can adapt the importance of angle errors depending on the object shape. This is especially useful for elongated objects such as ships or vehicles, where small angle errors can strongly reduce the localization quality \cite{yang2021learning}.
+
+Overall, angle prediction is difficult because the numerical representation of an oriented box is not always continuous, unique, or equally sensitive for all object shapes. CSL addresses this problem by treating angle prediction as circular classification, while KLD-based Gaussian representations address it by comparing whole boxes as probability distributions rather than isolated parameters. Both approaches aim to make oriented object detection more stable and better aligned with the geometric properties of rotated objects \cite{yang2022arbitrary,yang2021learning}.
+
+
+\subsubsection{Key Models}
+
+A central model for oriented object detection in aerial imagery is the RoI Transformer. It follows a two-stage detection framework and addresses the mismatch between horizontal region proposals and arbitrarily oriented objects. Instead of directly relying on horizontal Regions of Interest (HRoIs), the RoI Transformer learns a transformation from HRoIs to rotated Regions of Interest (RRoIs). This transformation is performed by a trainable RRoI Learner. The resulting RRoIs are then used for rotation-aware feature extraction through Rotated Position-Sensitive RoI Align. This improves the alignment between region features and object geometry, especially in dense aerial scenes where horizontal boxes may contain several neighboring objects \cite{ding2018learning}.
+
+Oriented R-CNN is another important two-stage detector for oriented object detection. Its main contribution is a more efficient way of generating oriented proposals. Earlier oriented detectors often used rotated anchors with multiple scales, aspect ratios, and angles, which increases computational cost. RoI Transformer avoids many rotated anchors by learning transformations from horizontal proposals, but still adds an additional proposal transformation stage. Oriented R-CNN instead introduces a lightweight oriented Region Proposal Network that directly generates oriented proposals. It uses a midpoint offset representation to describe oriented boxes and then applies an oriented detection head to classify and refine the proposals \cite{xie2021oriented}.
+
+Compared with RoI Transformer, Oriented R-CNN focuses more strongly on reducing the computational bottleneck of proposal generation. Xie et al. argue that producing oriented proposals is one of the main efficiency limitations in many two-stage oriented detectors. By generating oriented proposals in a simpler and nearly cost-free manner, Oriented R-CNN achieves a better balance between accuracy and speed while remaining compatible with the two-stage detection framework \cite{xie2021oriented}.
+
+In addition to detector architectures, several works address the representation and learning of oriented bounding boxes. Angle prediction is challenging because rotated boxes can suffer from boundary discontinuities and ambiguous parameterizations. Circular Smooth Label (CSL) reformulates angle prediction as a classification problem to better handle angular periodicity. KLD-based losses represent rotated bounding boxes as Gaussian distributions and compare predicted and ground-truth boxes at the distribution level. These approaches improve the learning of oriented boxes and complement detector architectures such as RoI Transformer and Oriented R-CNN \cite{yang2022arbitrary,yang2021learning}.
+
+Overall, RoI Transformer and Oriented R-CNN show how standard two-stage object detectors can be adapted to aerial imagery by replacing or extending horizontal proposals with oriented proposals. Together with improved angle representations and loss functions, these models address the central limitation of conventional detectors: their inability to precisely localize arbitrarily oriented objects in dense overhead scenes \cite{ding2018learning,xie2021oriented,yang2022arbitrary,yang2021learning}.
+
+
+\subsection{Datasets and Evaluation}
+
+Public benchmark datasets are essential for training, comparing, and evaluating object detection methods in aerial and satellite imagery. They differ in image source, spatial resolution, object categories, annotation format, and evaluation protocol. In particular, the distinction between horizontal and oriented bounding-box annotations determines whether a dataset can be used for conventional or oriented object detection.
+
+\subsubsection{Benchmark Datasets}
+
+The Dataset for Object deTection in Aerial Images (DOTA) is one of the most widely used benchmarks for oriented object detection. It contains aerial images acquired from different sensors and platforms and includes object categories such as airplanes, ships, vehicles, bridges, storage tanks, harbors, and sports facilities. A defining property of DOTA is the use of oriented bounding-box annotations, which enable the evaluation of arbitrarily rotated objects and densely arranged instances \cite{ding2021object}.
+
+DOTA has been released in several versions with increasing size and difficulty. DOTA-v1.0 contains 2,806 images, 188,282 annotated instances, and 15 object categories. DOTA-v1.5 uses the same images but additionally annotates extremely small objects below ten pixels and introduces the container-crane category, resulting in 16 categories and 402,089 instances. DOTA-v2.0 further expands the dataset to 11,268 images, 1,793,658 instances, and 18 categories by adding airports and helipads. It also includes additional satellite and airborne imagery, increasing the diversity of image sources and the number of large images with relatively sparse object distributions \cite{ding2021object}.
+
+DIOR, short for Object DetectIon in Optical Remote Sensing Images, is a large-scale benchmark for conventional horizontal object detection. It contains 23,463 images and 192,472 instances distributed across 20 object categories, including airplanes, airports, bridges, dams, vehicles, ships, train stations, and windmills. All instances are annotated using horizontal bounding boxes. The images have a fixed size of $800 \times 800$ pixels and cover a broad range of spatial resolutions, imaging conditions, seasons, weather conditions, and geographic regions \cite{li2020object}. Due to its category diversity and standardized HBB annotations, DIOR is well suited for evaluating general-purpose object detectors and comparing baseline architectures.
+
+The xView dataset focuses specifically on high-resolution satellite imagery. It is based on WorldView-3 images with a ground sample distance of approximately $0.3\,\mathrm{m}$ and contains more than one million annotated objects in 60 categories across more than $1{,}400\,\mathrm{km}^2$ of imagery. Its classes include different types of vehicles, aircraft, maritime vessels, buildings, and infrastructure objects \cite{lam2018xview}. The annotations use axis-aligned bounding boxes.
+
+A major challenge of xView is the extreme variation in object scale. Objects range from approximately ten pixels for small vehicles to several thousand pixels for large structures. Furthermore, the category distribution is strongly imbalanced, and many classes represent fine-grained distinctions between visually similar objects. These properties make xView particularly relevant for evaluating small-object detection, multi-scale recognition, geographic generalization, and object detection under realistic satellite-imagery conditions \cite{lam2018xview}.
+
+Overall, DOTA, DIOR, and xView cover complementary evaluation settings. DOTA primarily supports oriented object detection, DIOR provides a diverse benchmark for horizontal object detection in optical remote-sensing imagery, and xView emphasizes small, fine-grained objects in high-resolution satellite imagery.
+
+\subsubsection{Evaluation Metrics}
+
+Object detection performance is commonly evaluated using Intersection over Union (IoU), precision, recall, Average Precision (AP), and mean Average Precision (mAP). IoU measures the spatial overlap between a predicted bounding box $B_p$ and its corresponding ground-truth box $B_{gt}$:
+
+\begin{equation}
+    \operatorname{IoU}(B_p,B_{gt})
+    =
+    \frac{|B_p \cap B_{gt}|}
+         {|B_p \cup B_{gt}|}.
+\end{equation}
+
+A predicted object is considered a true positive when its predicted class is correct and its IoU with a ground-truth object exceeds a predefined threshold. Predictions that do not satisfy these conditions are treated as false positives, while ground-truth objects without a matching prediction are counted as false negatives. Precision describes the proportion of correct predictions among all predictions, whereas recall measures the proportion of ground-truth objects that were detected.
+
+Average Precision summarizes the precision-recall curve for one object category. It can be interpreted as the area under the precision-recall curve:
+
+\begin{equation}
+    \operatorname{AP}
+    =
+    \int_0^1 p(r)\,dr,
+\end{equation}
+
+where $p(r)$ denotes precision as a function of recall. Mean Average Precision is obtained by averaging AP over all $C$ object categories:
+
+\begin{equation}
+    \operatorname{mAP}
+    =
+    \frac{1}{C}
+    \sum_{c=1}^{C} \operatorname{AP}_c.
+\end{equation}
+
+A commonly used evaluation setting is $\operatorname{mAP}@0.5$, where a prediction is considered correctly localized if its IoU is at least $0.5$. This threshold is used in many aerial object detection benchmarks, including the PASCAL-VOC-style evaluation adopted by DOTA \cite{ding2021object}. While this metric provides an intuitive measure of overall detection performance, it may be relatively tolerant of inaccurate localization.
+
+For horizontal bounding boxes, the intersection region is itself an axis-aligned rectangle and can be calculated directly. For oriented bounding boxes, the calculation is more complex because two rotated rectangles may intersect in an irregular polygon. In the DOTA evaluation protocol, the predicted box, ground-truth box, and their intersection are treated as convex polygons. The intersection area is calculated geometrically, and the union is obtained as
+
+\begin{equation}
+    |B_p \cup B_{gt}|
+    =
+    |B_p| + |B_{gt}| - |B_p \cap B_{gt}|.
+\end{equation}
+
+Consequently, OBB evaluation requires a rotated-IoU or polygon-intersection implementation rather than the simpler axis-aligned IoU calculation \cite{ding2021object}.
+
+Stricter evaluation protocols report AP at higher IoU thresholds, such as $\operatorname{AP}_{75}$, or average the results over multiple thresholds. The metric $\operatorname{AP}_{50:95}$ averages AP over IoU thresholds from $0.50$ to $0.95$ and therefore places greater emphasis on precise localization than $\operatorname{AP}_{50}$ alone \cite{yang2022arbitrary}. This distinction is particularly important for oriented and elongated objects, because even a relatively small angular error can cause a substantial decrease in IoU.
+
+When comparing results from different publications, the annotation format and evaluation protocol must therefore be stated explicitly. Results obtained with HBB and OBB annotations, different IoU thresholds, or different AP interpolation methods are not necessarily directly comparable.
