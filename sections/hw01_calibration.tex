@@ -1,1 +1,186 @@
-\section{Homework: Calibration}
+\section{Homework 01: Panoramas, Features, and Calibration}
+
+This homework investigated image alignment tasks on paired RGB and thermal
+drone images. The available scenes were \texttt{ellipse}, \texttt{FH3},
+\texttt{forest}, and \texttt{hut}. They differ strongly in camera motion,
+scene structure, and overlap, which made them suitable for comparing panorama
+stitching, cross-modal feature matching, intrinsic calibration, and relative
+pose estimation. The RGB images have a larger field of view, while the thermal
+camera shows stronger distortion and less stable local texture. Therefore, the
+evaluation is based not only on numerical success values, but also on visual
+inspection and geometric consistency checks.
+
+\subsection{Panorama Stitching}
+
+The panorama experiment was carried out on the \texttt{ellipse} scene. This
+scene is the most appropriate sequence for panorama construction because the
+drone mostly rotated around the vertical axis while staying close to one
+position. This motion fits the panorama assumption better than the other
+scenes, where translation, depth variation, or vegetation produce stronger
+parallax. Seven RGB frames and seven thermal frames were used.
+
+The final implementation did not use OpenCV's automatic \texttt{Stitcher}.
+Instead, all frames were stitched manually in a controlled pipeline. First, the
+images were resized to a common processing scale. Thermal frames were converted
+to grayscale and contrast-enhanced with CLAHE, because raw thermal intensities
+provide less stable local texture than RGB images. Second, each frame was
+projected onto a cylinder. This step is important because a yaw rotation of the
+camera becomes approximately a horizontal translation after cylindrical
+projection. A simple affine or homography chain on the original images produced
+more visible ghosting and was therefore less suitable for this scene.
+
+After projection, neighboring frames were aligned with SIFT features and a
+small RANSAC procedure over 2D translation offsets. The RGB alignment was very
+stable: all six neighboring pairs were accepted, with 920 to 1333 inliers and
+inlier ratios between \(0.899\) and \(0.950\). The estimated horizontal
+translations ranged from approximately \(172\) to \(255\) pixels, while the
+vertical offsets stayed small. The thermal alignment was also accepted for all
+six neighboring pairs, but it was clearly weaker. It produced 246 to 587
+inliers and inlier ratios between \(0.344\) and \(0.544\). This difference
+matches the visual properties of the data: the RGB frames contain sharper
+building texture, while the thermal frames contain fewer repeatable features
+and stronger lens distortion.
+
+The pairwise translations were chained into the middle frame as reference. All
+cylindrical images were then warped onto one common canvas and blended with
+distance-transform feather weights. The resulting RGB panorama has a size of
+\(582 \times 2143\) pixels and a non-black image fraction of \(94.01\,\%\). It
+is visually coherent, and the building structure remains mostly consistent.
+Small artifacts can still appear because the implementation does not include
+bundle adjustment, advanced seam finding, exposure compensation, or multi-band
+blending.
+
+The thermal panorama has a size of \(841 \times 2884\) pixels and a non-black
+image fraction of \(94.20\,\%\). It is usable and visually coherent after CLAHE,
+cylindrical projection, translation-based stitching, and feather blending.
+However, the result must be interpreted more carefully than the RGB panorama.
+The focal value for the cylindrical projection is only approximate, the thermal
+camera is more distorted, and the image content contains fewer stable local
+details. Therefore, the thermal panorama demonstrates that the method can be
+applied to the thermal sequence, but it is less geometrically reliable than the
+RGB result.
+
+\subsection{Thermal-to-RGB Image Features}
+
+For thermal-to-RGB matching, all four scenes were evaluated with three feature
+setups: SIFT on CLAHE-enhanced grayscale images, ORB on normalized grayscale
+images, and AKAZE on edge-enhanced images. The matching pipeline used
+descriptor matching with Lowe's ratio test, mutual matching, unique RGB target
+points, and a RANSAC homography as geometric verification. The quality was
+measured with the number of detected keypoints, remaining descriptor matches,
+RANSAC inliers, inlier ratio, median reprojection error, spatial spread of
+matches, and visual inspection of the resulting match lines.
+
+The experiment shows that matching thermal to RGB images is much harder than
+matching two RGB images. RGB texture is often not visible in the thermal image,
+and thermal intensity changes do not necessarily correspond to visible image
+edges. High keypoint counts therefore do not directly translate into many
+reliable matches. SIFT and ORB often detected thousands of keypoints, but only a
+small number survived mutual matching and RANSAC. AKAZE on edge-enhanced images
+was the most useful descriptor setup overall, because structural boundaries are
+more likely to appear in both modalities.
+
+The best result was obtained on the \texttt{ellipse} scene with AKAZE, where
+the strongest pair produced 33 descriptor matches and 18 RANSAC inliers. This
+was classified as the only clearly good case in the experiment, although the
+visual result was still fragile. The \texttt{FH3} and \texttt{hut} scenes
+produced weak but usable examples, with best AKAZE results of 6 and 7 inliers,
+respectively. The \texttt{forest} scene did not work reliably. Its repetitive
+vegetation texture produced too few visually meaningful correspondences, even
+when RANSAC found a small consistent subset.
+
+The main conclusion is that thermal-to-RGB feature matching is possible for
+structured scenes, but it is not robust enough to be treated as a fully
+automatic registration method in this dataset. Descriptor distance alone is not
+a sufficient quality measure. A useful evaluation must combine match counts,
+RANSAC inliers, reprojection error, inlier spread, and visual inspection.
+
+\subsection{Intrinsic Camera Calibration}
+
+The intrinsic calibration task was treated separately from the provided
+ground-truth intrinsics. The goal was to check whether the available HW01 RGB
+and thermal images themselves are sufficient to estimate camera matrices and
+distortion coefficients. Since the RGB and thermal images come from two
+different physical cameras, they would have to be calibrated independently. The
+dataset contains 22 RGB images of size \(3840 \times 2160\) pixels and 22
+thermal images of size \(1280 \times 1024\) pixels. This number of images would
+be reasonable for a calibration experiment only if they showed a known
+calibration target from different positions, distances, and viewing angles.
+
+The available images are natural drone scenes rather than calibration-target
+images. This is the central limitation. A standard OpenCV calibration workflow
+requires known 3D object points, such as checkerboard or circle-grid corner
+coordinates in metric units, and corresponding detected 2D image points. The
+HW01 scenes contain buildings, vegetation, and other scene structures, but the
+real 3D positions, distances, and physical dimensions of these structures are
+unknown. Manually clicking image points would therefore not solve the problem,
+because the matching 3D object points would still be missing.
+
+As a sanity check, common checkerboard corner layouts were searched in all HW01
+images. No valid calibration-pattern candidates were found: the result was
+\(0\) candidates for all 22 RGB images and \(0\) candidates for all 22 thermal
+images. Consequently, the lists of object points and image points remained
+empty, and \texttt{cv2.calibrateCamera} was intentionally not executed. Running
+the function without valid 3D-to-2D correspondences would not produce a
+meaningful calibration result.
+
+The conclusion is that a real intrinsic calibration is not feasible from the
+HW01 images alone. The limitation is not the calibration algorithm, but the
+input data. Without known metric calibration geometry, the estimation problem is
+underconstrained: many different focal lengths, principal points, and
+distortion parameters could explain natural-scene image measurements. Feature
+matches between frames are useful for homography estimation, panorama
+construction, and relative pose estimation, but they are only 2D-to-2D
+correspondences and cannot replace calibration-target measurements.
+
+With valid calibration data, calibration quality would be evaluated with the
+RMS reprojection error, per-image residuals, residual plots over the image,
+visual undistortion checks on straight lines, and preferably a validation set of
+held-out calibration images. In this experiment, no such quality score can be
+reported because no calibration target and no known 3D-to-2D correspondences
+are available. Therefore, the provided ground-truth intrinsics may be used for
+later undistortion or extrinsic estimation, but they should not be presented as
+intrinsics estimated from the HW01 image set.
+
+\subsection{Extrinsic Estimation}
+
+The extrinsic notebook estimated relative motion frame by frame. The provided
+ground-truth intrinsic matrices and distortion coefficients were used for both
+the RGB and thermal cameras, but no ground-truth extrinsic parameters were used.
+For each consecutive frame pair, the pipeline detected SIFT features on
+CLAHE-enhanced grayscale images, matched descriptors with a mutual Lowe ratio
+test, undistorted the matched image points, and estimated an essential matrix
+with RANSAC. The relative rotation and translation direction were then recovered
+with \texttt{recoverPose}.
+
+The interpretation of these results is limited by monocular geometry. The
+translation can only be recovered up to an unknown scale, so the estimated
+translation vector is only a direction. In addition, pure rotation, low
+parallax, planar structure, and repetitive texture can make the translation
+direction unstable even when the number of inliers is high. For this reason,
+the evaluation used pose inlier count, inlier ratio, median epipolar error,
+median parallax angle, a homography-versus-Essential-Matrix degeneracy check,
+and visual inspection.
+
+The \texttt{FH3} sequence was the most consistently usable scene. All four RGB
+pairs and all four thermal pairs were classified as usable, with RGB inlier
+ratios between \(0.73\) and \(0.91\), and thermal inlier ratios between
+\(0.49\) and \(0.67\). The \texttt{forest} sequence contained some poor pairs
+with too few matches, but later frame pairs showed strong pose support, for
+example 916 RGB pose inliers on the best pair. The \texttt{hut} sequence was
+mixed, with some weak pairs and one clearly usable final pair for both cameras.
+
+The \texttt{ellipse} sequence highlights the main ambiguity of the task. Since
+the drone mostly rotated around the vertical axis, the rotation can be recovered
+more reliably than the translation. The first RGB pair had 1240 pose inliers
+and an inlier ratio of \(0.84\), but it was still classified as rotation usable
+with weak translation because the motion provides limited parallax and is close
+to a panorama setup. Most later \texttt{ellipse} pairs were poor for relative
+pose estimation.
+
+Overall, extrinsic estimation is feasible in a weak relative sense when stable
+matches and sufficient parallax are available. It should not be interpreted as
+a metric drone trajectory, because no absolute scale or ground-truth pose is
+available. Rotation estimates are generally more trustworthy than translation
+directions, and the final quality judgment has to combine geometric metrics
+with visual inspection of the matched inliers.
